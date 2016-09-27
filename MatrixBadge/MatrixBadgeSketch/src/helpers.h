@@ -1,28 +1,28 @@
 #include <Arduino.h>
 #include <EEPROM.h>
-#include "Badge.h"
+#include "Badge.cpp"
 
-badge_struct readStruct(){
-  badge_struct badge;
-  badge.id = EEPROM.read(idPos);
-  Serial.print("initialising\n[badge id]:\n" + badge.id ) ;
-  badge.mindFree = EEPROM.read(mindfreePos);
-  Serial.print("\n[mindfree]:\n" + badge.mindFree );
-  badge.choiceMade = EEPROM.read(choiceMadePos);
-  Serial.print("\n[choice made]:\n" + badge.choiceMade );
+Badge readBadge(){
+  Badge return_badge = new Badge::Badge();
+  return_badge.Set_ID(EEPROM.read(idPos));
+  Serial.print("initialising Badge ID");
+  return_badge.Set_MindFree(EEPROM.read(mindfreePos));
+  return_badge.Set_ChoiceMade(EEPROM.read(choiceMadePos));
+  return_badge.Set_Choice(EEPROM.read(choicePos));
   Serial.print("\nBadges Seen {");
   for (int i = 0;i<30;i++){
-    badge.freeMinds[i] = EEPROM.read(freeMindsBasePos+i);
+    return_badge.Set_FreeMind(i,EEPROM.read(freeMindsBasePos+i));
   }
   Serial.print("\n}");
-  return badge;
+  return return_badge;
 }
 
-void writeStruct(badge_struct p_badge){
-  EEPROM.write(p_badge.id,idPos);
-  EEPROM.write(p_badge.mindFree,mindfreePos);
-  EEPROM.write(p_badge.choiceMade,choiceMadePos);
+void writeBadge(Badge p_badge){
+  EEPROM.write(p_badge.Get_ID(),idPos);
+  EEPROM.write(p_badge.Get_MindFree(),mindfreePos);
+  EEPROM.write(p_badge.Get_ChoiceMade(),choiceMadePos);
+  EEPROM.write(p_badge.Get_Choice(),choicePos);
   for (int i = 0;i<30;i++){
-    EEPROM.write(p_badge.freeMinds[i],freeMindsBasePos+i);
+    EEPROM.write(p_badge.Get_FreeMind(i),freeMindsBasePos+i);
   }
 }
