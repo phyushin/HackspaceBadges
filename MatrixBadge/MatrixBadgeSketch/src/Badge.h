@@ -29,4 +29,7 @@ public:
   char Get_ID();
   int Get_Choice();
   char Get_FreeMind(int);
+
+  void InitBadge();
+  void SaveBadge();
 };

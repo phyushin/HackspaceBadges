@@ -1,4 +1,5 @@
 #include "Badge.h"
+#include <EEPROM.h>
 
 Badge::Badge(){
   m_mindFree=false;
@@ -48,3 +49,22 @@ int Badge::Get_Choice(){
 char Badge::Get_FreeMind(int index){
   return this->m_freeMinds[index];
 }
+
+void Badge::InitBadge(){
+  this->Set_ID(EEPROM.read(idPos));
+  this->Set_MindFree(EEPROM.read(mindfreePos));
+  this->Set_ChoiceMade(EEPROM.read(choiceMadePos));
+  this->Set_Choice(EEPROM.read(choicePos));
+  for (int i = 0;i<30;i++){
+    this->Set_FreeMind(i,EEPROM.read(freeMindsBasePos+i));
+  }
+}
+  void Badge::SaveBadge(){
+    EEPROM.write(this->Get_ID(),idPos);
+    EEPROM.write(this->Get_MindFree(),mindfreePos);
+    EEPROM.write(this->Get_ChoiceMade(),choiceMadePos);
+    EEPROM.write(this->Get_Choice(),choicePos);
+    for (int i = 0;i<30;i++){
+      EEPROM.write(this->Get_FreeMind(i),freeMindsBasePos+i);
+    }
+  }

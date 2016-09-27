@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include "helpers.h"
+#include "Badge.cpp"
 /*
   Hackspace Matrix Badge
 */
@@ -18,7 +18,7 @@ int bluePillState = 0;
 
 void setup() {
   Serial.begin(9600);
-  badge = readBadge();
+  badge = new Badge();
   pinMode(matrixLED, OUTPUT);
   pinMode(RedLED,OUTPUT);
   pinMode(BlueLED,OUTPUT);
