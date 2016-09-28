@@ -1,32 +1,55 @@
-#define idPos   0
-#define mindfreePos 1
-#define choiceMadePos 2
-#define choicePos 3
-#define freeMindsBasePos 4
 
-class Badge{
+#ifndef __BADGE_H__
+#define __BADGE_H__
+
+// Include Files
+#include <Arduino.h>
+
+// Definitions
+#define OFFSET_MAGIC 0
+#define OFFSET_ID 0
+#define OFFSET_MINDFREE 1
+#define OFFSET_CHOICEMADE 2
+#define OFFSET_CHOICE 3
+#define OFFSET_FREEMINDS 4
+
+#define NUM_FREEMINDS 30
+
+#define CODE_MAGIC 0xCB
+
+typedef enum PILL_CHOICE {
+  CHOICE_NONE = 0,
+  CHOICE_RED = 1,
+  CHOICE_BLUE = 2
+} PillChoice;
+
+// Badge class - for reprsenting and storing this badge
+
+class Badge {
 
 private:
-
-  bool m_mindFree;
-  bool m_choiceMade;
-  char m_id;
-  int  m_choice;
-  int  m_freeMinds[30];
+  uint8_t m_id;
+  PillChoice m_choice;
+  PillChoice m_freeMinds[NUM_FREEMINDS];
 
 public:
+  Badge();
+  Badge(int, PillChoice);
+  Badge(const Badge &);
 
-  Badge ();
-  Badge(char,bool,bool,int);
-  void Set_MindFree(bool);
-  void Set_ChoiceMade(bool);
-  void Set_ID(char);
-  void Set_Choice(int);
-  void Set_FreeMind(int,char);
+  void Set_ID(int);
+  void Set_PillChoice(PillChoice);
+  void Set_FreeMind(int, PillChoice);
 
-  bool Get_MindFree();
-  bool Get_ChoiceMade();
-  char Get_ID();
-  int Get_Choice();
-  char Get_FreeMind(int);
+  int Get_ID();
+  PillChoice Get_PillChoice();
+  PillChoice Get_FreeMind(int);
+
+  void SaveToEeprom();
+  bool ReadFromEeprom();
+
+protected:
+  void setToDefaults();
 };
+
+#endif //__BADGE_H__
