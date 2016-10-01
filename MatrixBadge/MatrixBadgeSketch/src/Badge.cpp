@@ -33,11 +33,13 @@ Badge::Badge(const Badge &copy) {
  * Sets this Badge's ID value
  */
 void Badge::Set_ID(int p_ID) { m_id = p_ID; }
+
 /**
  * Sets this Badge's owners selection of the PILL color, default is NONE if it
  * hasn't been selected yet.
  */
 void Badge::Set_PillChoice(PillChoice p_choice) { m_choice = p_choice; }
+
 /**
  * Sets the PILL color selection of another badge (RED/BLUE) if it has
  * been discovered, default is NONE if it hasn't been set yet.
@@ -52,11 +54,13 @@ void Badge::Set_FreeMind(int p_ID, PillChoice p_choice) {
  * Returns this Badge's ID value
  */
 int Badge::Get_ID() { return m_id; }
+
 /**
  * Returns this Badge's owners selection of the PILL color, or none if it
  * hasn't been selected yet.
  */
 PillChoice Badge::Get_PillChoice() { return m_choice; }
+
 /**
  * Returns the PILL color selection of another badge (RED/BLUE) if it has
  * been discovered, or NONE if it hasn't been discovered yet.
