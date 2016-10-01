@@ -23,7 +23,7 @@ typedef enum PILL_CHOICE {
   CHOICE_BLUE = 2
 } PillChoice;
 
-// Badge class - for reprsenting and storing this badge
+// Badge class - for representing and storing this badge
 
 class Badge {
 
