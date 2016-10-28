@@ -44,6 +44,10 @@ void setup() {
   // Initialize the inputs
   pinMode(bluePill, INPUT);
   pinMode(redPill, INPUT);
+
+  // Turn on the Red and Blue LEDs
+  digitalWrite(RedLED, LED_ON);
+  digitalWrite(BlueLED, LED_ON);
 }
 
 void loop() {
@@ -66,17 +70,15 @@ void loop() {
     }
   }
 
-  // Update the LEDs depending on the choice made
-  digitalWrite(RedLED,
-               ((badge.Get_PillChoice() == CHOICE_RED) ? LED_ON : LED_OFF));
-  digitalWrite(BlueLED,
-               ((badge.Get_PillChoice() == CHOICE_BLUE) ? LED_ON : LED_OFF));
-  digitalWrite(MatrixLED,
-               ((badge.Get_PillChoice() == CHOICE_NONE) ? LED_ON : LED_OFF));
-
-  // If our state has been changed, then save to EEPROM
+  // If our state has been changed, then save to EEPROM and turn off the Blue
+  // and Red LEDs and turn on the Green one
   if (changed) {
     Serial.println("LOOP: Changes made - updating EEPROM");
     badge.SaveToEeprom();
+
+    digitalWrite(RedLED, LED_OFF);
+    digitalWrite(BlueLED, LED_OFF);
+    digitalWrite(MatrixLED, LED_ON);
+
   }
 }
